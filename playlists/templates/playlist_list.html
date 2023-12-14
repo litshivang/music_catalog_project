@@ -1,0 +1,15 @@
+<!-- playlists/templates/playlists/playlist_list.html -->
+<h1>Playlist List</h1>
+<ul>
+  {% for playlist in playlists %}
+    <li><a href="{% url 'playlist-detail' playlist.uuid %}">{{ playlist.name }}</a></li>
+  {% endfor %}
+</ul>
+
+<!-- playlists/templates/playlists/playlist_detail.html -->
+<h1>{{ playlist.name }}</h1>
+<ul>
+  {% for playlist_track in playlist_tracks %}
+    <li>{{ playlist_track.track.title }} - Order: {{ playlist_track.order }}</li>
+  {% endfor %}
+</ul>
