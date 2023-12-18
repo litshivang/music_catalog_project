@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Catalog Landing Page</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #8a2387, #e94057, #f27121);
+        }
+
+        canvas {
+            display: block;
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 3em;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .action-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80%;
+        }
+
+        .action-card {
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            background: linear-gradient(135deg, #8a2387, #e94057, #f27121);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .action-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+            z-index: -1;
+            border-radius: 8px;
+        }
+
+        .action-card:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #ffffff;
+        }
+
+        a, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #333;
+            border-radius: 4px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a {
+            background: linear-gradient(180deg, #8a2387, #e94057, #f27121);
+            color: #ffffff;
+        }
+
+        select {
+            color: black;
+        }
+
+        button {
+            background: linear-gradient(180deg, #8a2387, #e94057, #f27121);
+            color: #ffffff;
+        }
+
+        button:hover {
+            background: linear-gradient(180deg, #711c5e, #be2c4f, #cf6016);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <h1>Welcome to the Music Catalog</h1>
+
+    <div class="action-container">
+        <div class="action-card">
+            <h2>View Single Playlist</h2>
+            <form action="{% url 'playlist-tmp-detail' %}" method="get">
+                <label for="playlistName">Select Playlist:</label>
+                <select name="playlistName" id="playlistName" class="form-control">
+                    {% for playlist in playlists %}
+                        <option value="{{ playlist.name }}">{{ playlist.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">View Playlist</button>
+            </form>
+        </div>
+
+        <div class="action-card">
+            <h2>Update Playlist</h2>
+            <form action="{% url 'update-playlist-tmp' %}" method="get">
+                <label for="updatePlaylistName">Select Playlist:</label>
+                <select name="updatePlaylistName" id="updatePlaylistName" class="form-control">
+                    {% for playlist in playlists %}
+                        <option value="{{ playlist.name }}">{{ playlist.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Update Playlist</button>
+            </form>
+        </div>
+
+        <div class="action-card">
+            <h2>Create a Playlist</h2>
+            <a href="{% url 'create-playlist' %}" class="btn btn-primary">Create Playlist</a>
+        </div>
+
+        <div class="action-card">
+            <h2>Delete Playlist</h2>
+            <form action="{% url 'delete-playlist-tmp' %}" method="get">
+                <label for="deletePlaylistName">Select Playlist:</label>
+                <select name="deletePlaylistName" id="deletePlaylistName" class="form-control">
+                    {% for playlist in playlists %}
+                        <option value="{{ playlist.name }}">{{ playlist.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-danger">Delete Playlist</button>
+            </form>
+        </div>
+
+        <div class="action-card">
+            <h2>View All Playlists</h2>
+            <a href="{% url 'playlist-list' %}" class="btn btn-primary">View All Playlists</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js background animation
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var geometry = new THREE.BufferGeometry();
+        var material = new THREE.PointsMaterial({ size: 0.02, color: 0xffffff });
+
+        var vertices = [];
+        for (var i = 0; i < 1000; i++) {
+            var x = (Math.random() - 0.5) * 2;
+            var y = (Math.random() - 0.5) * 2;
+            var z = (Math.random() - 0.5) * 2;
+            vertices.push(x, y, z);
+        }
+
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        var points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        camera.position.z = 5;
+
+        var animate = function () {
+            requestAnimationFrame(animate);
+
+            points.rotation.x += 0.005;
+            points.rotation.y += 0.005;
+
+            renderer.render(scene, camera);
+        };
+
+        animate();
+    </script>
+</body>
+
+</html>

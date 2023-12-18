@@ -1,0 +1,102 @@
+<!-- playlists/templates/playlists/playlist_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <title>All PlayLists</title>
+    <style>
+        body {
+            background-color: #151515;
+            font-family: 'Quicksand', sans-serif;
+            color: #fff;
+            background: url('https://your-music-background-image-url.jpg') center/cover no-repeat fixed;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #ffc107;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .list-group-item {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            transition: background 0.3s ease;
+            overflow: hidden;
+        }
+
+        .list-group-item a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 15px;
+        }
+
+        .list-group-item:hover {
+            background: linear-gradient(to right, #2980b9, #2078ae);
+        }
+
+        .list-group-item:hover a {
+            color: #d9d9d9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>All Playlists</h1>
+    <div class="list-group">
+        {% for playlist in playlists %}
+            <div class="list-group-item">
+                <a href="{% url 'playlist-detail' playlist.uuid %}">{{ playlist.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // Change background image on page refresh
+    document.addEventListener("DOMContentLoaded", function () {
+        const backgrounds = [
+            'https://your-music-background-image-url1.jpg',
+            'https://your-music-background-image-url2.jpg',
+            'https://your-music-background-image-url3.jpg',
+            // Add more image URLs as needed
+        ];
+        const randomIndex = Math.floor(Math.random() * backgrounds.length);
+        document.body.style.backgroundImage = `url('${backgrounds[randomIndex]}')`;
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -67,7 +67,7 @@ ROOT_URLCONF = 'music_catalog_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'playlists' / 'templates'],  # Adjust the path accordingly
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,0 +1,16 @@
+<!-- playlists/templates/playlists/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T6ICq1hj4jc1h3brf4e5DL1xOA1fSpV91k64t65D5X6c4Y4DIW1CCw6ef7P1fVpQ" crossorigin="anonymous">
+    <title>{% block title %}Music Catalog{% endblock %}</title>
+</head>
+<body>
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-oNqNxES3/rCytLU8Flkwepp9kTkATuHz/8GRa4qbr4p5ePxSc8eFsb14FZV/6b7M" crossorigin="anonymous"></script>
+</body>
+</html>
